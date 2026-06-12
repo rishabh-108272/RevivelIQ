@@ -110,12 +110,26 @@ Navigate to `http://localhost:3000` to interact with the interface.
 
 ---
 
-## Developer/Hackathon Quick Login Bypass
-The login screen features quick-bypass buttons to simulate role-based authorization scopes:
-- **System Admin** (`admin@reviveiq.com`): Full dashboard controls, manual DB reseed triggers.
-- **Customer Success Lead** (`cs@reviveiq.com`): Ticket clustering analysis, support escalations approval.
-- **Finance Lead** (`finance@reviveiq.com`): Receivable overdue charts, collection outreach approvals.
-- **Sales Lead** (`sales@reviveiq.com`): Expiration dates tracker, rate discount approvals.
+## Developer/Hackathon Quick Login Bypass & Onboarding
+
+### 1. Instant Hackathon Access (One-Click Bypass)
+For quick evaluation without executing registration or typing passwords, the login page features an **"Instant Access Bypass"** button at the top:
+- Clicking this sets a local session and authorizes requests using a dedicated `hackathon-bypass-token`.
+- The backend recognizes this token, bypasses JWT validation, and automatically maps the session to the default **System Admin** user account.
+
+### 2. Multi-Tenant Role-based Bypass Selectors
+Alternatively, the login page hosts quick-bypass buttons to switch scopes instantly:
+- **System Admin** (`admin@reviveiq.com` / `admin123`): Full dashboard controls, manual DB reseed triggers.
+- **Customer Success Lead** (`cs@reviveiq.com` / `cs123`): Ticket clustering analysis, support escalations approval.
+- **Finance Lead** (`finance@reviveiq.com` / `finance123`): Receivable overdue charts, collection outreach approvals.
+- **Sales Lead** (`sales@reviveiq.com` / `sales123`): Expiration dates tracker, rate discount approvals.
+
+### 3. User Signup & Dynamic Environment Seeding
+To register a brand-new tenant:
+1. Toggle the login screen to **"Create one"**.
+2. Register a new name, email, password, and custom organization.
+3. Upon signup, the backend triggers an **asynchronous seeding task** (using FastAPI's `BackgroundTasks`) to populate the new tenant with a realistic synthetic portfolio of 100 customers, 500 invoices, 100 contracts, 1000 communications, and 500 tickets, then runs the multi-agent assessment sync.
+4. The user is redirected to sign in immediately, with their metrics fully populating in the background.
 
 ---
 
