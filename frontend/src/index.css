@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply antialiased font-sans text-microsoft-charcoal bg-[#fdfdfd] transition-colors duration-200 ease-in-out;
+  }
+
+  /* Custom styling for sleek Fluent UI feel scrollbars */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-zinc-700 rounded-full hover:bg-gray-400 dark:hover:bg-zinc-600;
+  }
+}
+
+/* Glassmorphism utility card styles */
+.glass-panel {
+  @apply bg-white/70 dark:bg-[#201f1e]/85 backdrop-blur-md border border-[#edebe9]/40 dark:border-zinc-800/50 shadow-sm rounded-lg;
+}
+
+/* Micro-animations */
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.15); opacity: 0.3; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.risk-dot-ping {
+  animation: pulse-ring 2s infinite ease-in-out;
+}

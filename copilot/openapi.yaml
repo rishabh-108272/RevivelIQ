@@ -1,0 +1,120 @@
+openapi: 3.0.1
+info:
+  title: ReviveIQ Copilot API Extension
+  description: APIs enabling Microsoft 365 Copilot to fetch revenue risk assessments, outreach actions, and decision simulations.
+  version: 1.0.0
+servers:
+  - url: https://reviveiq.azurewebsites.net/api
+paths:
+  /copilot/query:
+    post:
+      summary: Natural Language Risk Search
+      description: Allows Copilot to ask natural language questions about customer risk levels, overdue bills, and communications history.
+      operationId: queryCopilotRisk
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                prompt:
+                  type: string
+                  description: The natural language question (e.g. "Who has unpaid invoices?")
+              required:
+                - prompt
+      responses:
+        '200':
+          description: Successful query execution returning text descriptions and Adaptive Cards.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_text:
+                    type: string
+                  data:
+                    type: object
+                  adaptive_card:
+                    type: object
+
+  /analytics/dashboard:
+    get:
+      summary: Get Portfolio Dashboard Summary
+      description: Retrieves core portfolio aggregates (total revenue at risk, churn counts, overdue invoices).
+      operationId: getDashboardStats
+      responses:
+        '200':
+          description: Dashboard metrics.
+
+  /customers/{customer_id}:
+    get:
+      summary: Get Customer Risk Profile
+      description: Returns unified details on contracts, aging invoices, ticket clusters, and AI explanations.
+      operationId: getCustomerProfile
+      parameters:
+        - name: customer_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Customer risk profile payload.
+
+  /recommendations/{recommendation_id}:
+    put:
+      summary: Update Recovery Outreach Status
+      description: Approves or completes an AI outreach recommendation card.
+      operationId: updateOutreachStatus
+      parameters:
+        - name: recommendation_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status:
+                  type: string
+                  enum: [Pending, Approved, Rejected, Completed]
+              required:
+                - status
+      responses:
+        '200':
+          description: Updated recommendation object.
+
+  /simulations/:
+    post:
+      summary: Execute Decision Simulation
+      description: Simulates resolving tickets or offering contract discounts to project risk decreases.
+      operationId: runRiskSimulation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_id:
+                  type: integer
+                query:
+                  type: string
+                resolve_tickets:
+                  type: boolean
+                clear_overdue_invoices:
+                  type: boolean
+                apply_renewal_discount:
+                  type: boolean
+                discount_percentage:
+                  type: number
+              required:
+                - customer_id
+      responses:
+        '200':
+          description: Original vs simulated risk parameters comparison.

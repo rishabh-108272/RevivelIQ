@@ -1,0 +1,38 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+web_drivers/
+backend/venv/
+.venv/
+env/
+venv/
+
+# Build outputs
+dist/
+build/
+bin/
+obj/
+*.pyc
+__pycache__/
+
+# Database files
+*.db
+*.sqlite3
+
+# Environment secrets
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE configurations
+.vscode/
+.idea/
+*.suo
+*.user
+*.sln
+
+# OS logs
+.DS_Store
+Thumbs.db
