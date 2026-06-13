@@ -2,7 +2,7 @@
 
 ReviveIQ is an enterprise-grade multi-agent AI decision intelligence platform designed to proactively identify and mitigate corporate revenue risks. Built for Microsoft Enterprise Agents Hackathons, it highlights deep integration with Microsoft 365 Copilot extensibility interfaces, utilizing first-class adapters for Microsoft Work IQ, Foundry IQ, and Graph abstractions.
 
-<video src="https://github.com/user-attachments/assets/xxxx-xxxx-xxxx" controls="controls" style="max-width: 100%;">
+<video src="https://github.com/rishabh-108272/RevivelIQ/blob/main/user-attachments/assets/demo.mp4" controls="controls" style="max-width: 100%;">
 </video>
 
 ---
