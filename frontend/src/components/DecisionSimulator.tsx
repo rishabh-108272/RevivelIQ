@@ -178,6 +178,11 @@ export const DecisionSimulator: React.FC<DecisionSimulatorProps> = ({ customerId
                   <p className="text-[9px] text-gray-400 leading-normal">
                     Projected annual value adjustments: -${((customerRevenue * discountPercent) / 100).toLocaleString()} contract value.
                   </p>
+                  {discountPercent > 20 && (
+                    <div className="p-2 bg-red-50 dark:bg-red-950/20 text-risk-high rounded text-[10px] leading-normal font-semibold border border-red-200 dark:border-red-900/50 mt-1">
+                      ⚠️ SafetyGuard Warning: Discounts above 20% require manual Board approval overrides.
+                    </div>
+                  )}
                 </div>
               )}
             </div>

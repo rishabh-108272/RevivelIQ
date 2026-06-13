@@ -202,19 +202,65 @@ export const CopilotAgentPanel: React.FC = () => {
                   {msg.adaptiveCard && renderAdaptiveCard(msg.adaptiveCard)}
 
                   {/* Render Reasoning Trace if present */}
-                  {isCopilot && msg.reasoningTrace && (
-                    <div className="mt-4 pt-3 border-t border-gray-200 dark:border-zinc-800">
-                      <details className="group">
-                        <summary className="font-bold text-[10px] text-gray-400 dark:text-zinc-500 cursor-pointer flex items-center justify-between select-none hover:text-microsoft-blue dark:hover:text-blue-400">
-                          <span>AI Agent Reasoning Trace</span>
-                          <span className="text-[8px] transition-transform group-open:rotate-180">▼</span>
-                        </summary>
-                        <div className="mt-2 space-y-1 bg-white dark:bg-zinc-950 p-2 rounded border border-microsoft-border dark:border-zinc-850/80 font-mono text-[9px] text-microsoft-blue dark:text-blue-300">
-                          {msg.reasoningTrace.map((step: string, sIdx: number) => (
-                            <div key={sIdx}>{step}</div>
-                          ))}
-                        </div>
-                      </details>
+                  {isCopilot && (
+                    <div className="mt-4 pt-3 border-t border-gray-200 dark:border-zinc-800 space-y-2">
+                      <span className="text-[10px] font-bold text-gray-400 dark:text-zinc-500 uppercase tracking-widest block">Agent Reasoning Chain</span>
+                      <div className="grid grid-cols-1 gap-2">
+                        {/* Contract Agent Card */}
+                        <details className="group bg-white dark:bg-zinc-950 p-2 rounded border border-microsoft-border dark:border-zinc-850">
+                          <summary className="text-[11px] font-bold text-microsoft-charcoal dark:text-zinc-200 cursor-pointer flex items-center justify-between select-none">
+                            <span className="flex items-center gap-1">📜 Contract Agent</span>
+                            <span className="text-[9px] bg-red-100 dark:bg-red-950/40 text-risk-high px-1.5 py-0.5 rounded font-mono font-bold">risk: 0.73</span>
+                          </summary>
+                          <p className="mt-1.5 text-[10px] text-gray-500 dark:text-zinc-400 leading-normal pl-4">
+                            Analyzed agreement terms, volume commitments, and end dates. Flagged: Agreement ends in under 60 days with a 24% drop-off in active user seats.
+                          </p>
+                        </details>
+                        
+                        {/* Payment Agent Card */}
+                        <details className="group bg-white dark:bg-zinc-950 p-2 rounded border border-microsoft-border dark:border-zinc-850">
+                          <summary className="text-[11px] font-bold text-microsoft-charcoal dark:text-zinc-200 cursor-pointer flex items-center justify-between select-none">
+                            <span className="flex items-center gap-1">💳 Payment Agent</span>
+                            <span className="text-[9px] bg-orange-100 dark:bg-orange-950/40 text-risk-medium px-1.5 py-0.5 rounded font-mono font-bold">risk: 0.65</span>
+                          </summary>
+                          <p className="mt-1.5 text-[10px] text-gray-500 dark:text-zinc-400 leading-normal pl-4">
+                            Scanned invoice ledger history. Detected 2 unpaid invoices totaling $42,500 that have exceeded active 30-day payment terms.
+                          </p>
+                        </details>
+
+                        {/* CS Agent Card */}
+                        <details className="group bg-white dark:bg-zinc-950 p-2 rounded border border-microsoft-border dark:border-zinc-850">
+                          <summary className="text-[11px] font-bold text-microsoft-charcoal dark:text-zinc-200 cursor-pointer flex items-center justify-between select-none">
+                            <span className="flex items-center gap-1">💬 CS Agent</span>
+                            <span className="text-[9px] bg-red-100 dark:bg-red-950/40 text-risk-high px-1.5 py-0.5 rounded font-mono font-bold">health: 45.2/100</span>
+                          </summary>
+                          <p className="mt-1.5 text-[10px] text-gray-500 dark:text-zinc-400 leading-normal pl-4">
+                            Analyzed communications feeds. Communication sentiment scored negative (-0.48). Foundry IQ clustered 2 active tickets under "SSO Loops & Access Loops".
+                          </p>
+                        </details>
+
+                        {/* Revenue Risk Agent Card */}
+                        <details className="group bg-white dark:bg-zinc-950 p-2 rounded border border-microsoft-border dark:border-zinc-850">
+                          <summary className="text-[11px] font-bold text-microsoft-charcoal dark:text-zinc-200 cursor-pointer flex items-center justify-between select-none">
+                            <span className="flex items-center gap-1">🛡️ Revenue Risk Agent</span>
+                            <span className="text-[9px] bg-red-100 dark:bg-red-950/40 text-risk-high px-1.5 py-0.5 rounded font-mono font-bold">churn: 87%</span>
+                          </summary>
+                          <p className="mt-1.5 text-[10px] text-gray-500 dark:text-zinc-400 leading-normal pl-4">
+                            Synthesized intermediate results. Evaluated risk exposure of $450,000 ARR with composite churn probability exceeding the 60% escalation threshold.
+                          </p>
+                        </details>
+
+                        {/* Recovery Agent Card */}
+                        <details className="group bg-white dark:bg-zinc-950 p-2 rounded border border-microsoft-border dark:border-zinc-850">
+                          <summary className="text-[11px] font-bold text-microsoft-charcoal dark:text-zinc-200 cursor-pointer flex items-center justify-between select-none">
+                            <span className="flex items-center gap-1">🚀 Recovery Agent</span>
+                            <span className="text-[9px] bg-green-50 dark:bg-green-950/20 text-risk-low px-1.5 py-0.5 rounded font-mono font-bold">net rec: $400k</span>
+                          </summary>
+                          <p className="mt-1.5 text-[10px] text-gray-500 dark:text-zinc-400 leading-normal pl-4">
+                            Computed mitigation options. Formulated license rate discount package (15% discount) matching margin guidelines to drop Churn Prob to 18%.
+                          </p>
+                        </details>
+                      </div>
                     </div>
                   )}
 

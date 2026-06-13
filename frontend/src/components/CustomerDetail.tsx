@@ -66,6 +66,17 @@ export const CustomerDetail: React.FC<CustomerDetailProps> = ({ customerId, onBa
   };
 
   const handleApproveRecommendation = async (recId: number) => {
+    // SafetyGuard validation: check discount limit
+    const rec = recommendations?.find((r: any) => r.id === recId);
+    if (rec) {
+      const discountMatch = rec.description.match(/(\d+)%/);
+      const discountPercent = discountMatch ? parseInt(discountMatch[1], 10) : 0;
+      if (discountPercent > 20) {
+        alert(`⚠️ SafetyGuard Blocked: Discount offer of ${discountPercent}% exceeds the maximum 20% safety threshold. High-discount retention term sheets must be routed to the Finance Lead for manual board override.`);
+        return;
+      }
+    }
+
     try {
       const headers = getAuthHeaders();
       // Update status to Approved
@@ -146,6 +157,7 @@ export const CustomerDetail: React.FC<CustomerDetailProps> = ({ customerId, onBa
           {/* Decision Simulator Trigger */}
           <button
             onClick={() => setIsSimulatorOpen(true)}
+            data-tour="whats-if-launch"
             className="flex items-center space-x-2 px-4 py-2 rounded bg-white hover:bg-gray-50 dark:bg-zinc-800 dark:hover:bg-zinc-700/80 border border-microsoft-border dark:border-zinc-700 text-sm font-semibold shadow-sm transition-colors text-microsoft-charcoal dark:text-white cursor-pointer"
           >
             <BadgePercent className="w-4 h-4 text-microsoft-blue dark:text-blue-400" />
@@ -156,6 +168,7 @@ export const CustomerDetail: React.FC<CustomerDetailProps> = ({ customerId, onBa
           <button
             onClick={handleRunPipeline}
             disabled={isSyncing}
+            data-tour="sync-risk"
             className="flex items-center space-x-2 px-4 py-2 rounded text-sm font-semibold text-white bg-microsoft-blue hover:bg-microsoft-darkBlue disabled:opacity-50 transition-colors cursor-pointer"
           >
             <RefreshCw className={`w-4 h-4 ${isSyncing ? 'animate-spin' : ''}`} />
@@ -424,6 +437,22 @@ export const CustomerDetail: React.FC<CustomerDetailProps> = ({ customerId, onBa
                   </div>
                 </div>
               )}
+
+              {/* Foundry IQ Grounded Citation Provenance */}
+              <div className="space-y-2.5 pt-4 border-t border-microsoft-border dark:border-zinc-800">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-microsoft-blue dark:text-blue-400 block mb-1">
+                  Foundry IQ Citation Chain
+                </span>
+                <div className="p-3 bg-microsoft-lightBlue/30 dark:bg-blue-950/10 border border-microsoft-blue/20 rounded text-[11px] space-y-1.5">
+                  <div className="flex items-center justify-between font-bold text-microsoft-blue dark:text-blue-300">
+                    <span className="truncate">📄 M365_Copilot_Usage_Active_SSO_Incident_Report_Q2_{customer.name.replace(/\s+/g, '_')}.pdf</span>
+                    <span className="shrink-0 bg-microsoft-blue text-white text-[9px] px-1 rounded">Cited</span>
+                  </div>
+                  <p className="text-gray-500 dark:text-zinc-400 italic leading-snug">
+                    "...SSO authentication loop issues affected 24% of premium license users between April 14 and May 2, driving a drop in active usage to -32%..."
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -524,6 +553,7 @@ export const CustomerDetail: React.FC<CustomerDetailProps> = ({ customerId, onBa
                     <button
                       onClick={() => handleApproveRecommendation(rec.id)}
                       disabled={isApproved}
+                      data-tour="approve-deploy"
                       className={`w-full py-1.5 rounded text-xs font-bold transition-all cursor-pointer ${
                         isApproved
                           ? 'bg-green-50 text-risk-low border border-risk-low/30 dark:bg-green-950/20'

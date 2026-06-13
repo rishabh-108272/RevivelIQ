@@ -128,7 +128,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectCustomer, searchVa
       {/* KPI Indicators Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {/* KPI 1: Revenue at Risk */}
-        <div className="glass-panel p-6 flex items-start justify-between">
+        <div data-tour="kpi-arr" className="glass-panel p-6 flex items-start justify-between">
           <div className="space-y-2">
             <span className="text-xs font-bold uppercase tracking-widest text-gray-400 dark:text-zinc-500">Revenue At Risk</span>
             <h2 className="text-2xl font-black text-risk-high">${metrics?.total_revenue_at_risk.toLocaleString('en-US', { minimumFractionDigits: 2 })}</h2>
@@ -258,6 +258,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectCustomer, searchVa
           </button>
           <button
             onClick={() => setActiveSubTab('briefing')}
+            data-tour="executive-briefing"
             className={`px-4 py-2 text-sm font-bold border-b-2 -mb-[2px] transition-all flex items-center space-x-2 ${
               activeSubTab === 'briefing'
                 ? 'border-microsoft-blue text-microsoft-blue dark:text-blue-400'
@@ -271,7 +272,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ onSelectCustomer, searchVa
 
         {/* View 1: Stressed Customers Portfolio List */}
         {activeSubTab === 'portfolio' && (
-          <div className="glass-panel overflow-hidden">
+          <div data-tour="stressed-clients" className="glass-panel overflow-hidden">
             {/* Filter toolbars */}
             <div className="px-6 py-4 bg-[#faf9f8] dark:bg-zinc-900/40 border-b border-microsoft-border dark:border-zinc-800 flex flex-wrap gap-4 items-center justify-between">
               <span className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-zinc-500">Stressed Client Accounts ({customers.length})</span>

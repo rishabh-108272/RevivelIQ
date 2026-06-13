@@ -33,6 +33,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeTab, setActiveTab, onRes
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
+              data-tour={item.id}
               className={`w-full flex items-center space-x-3 px-3 py-2 rounded-md text-sm font-semibold transition-all duration-150 ${
                 isActive
                   ? 'bg-microsoft-lightBlue text-microsoft-blue dark:bg-microsoft-blue/10 dark:text-blue-400'

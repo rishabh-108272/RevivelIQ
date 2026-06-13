@@ -2,6 +2,9 @@
 
 ReviveIQ is an enterprise-grade multi-agent AI decision intelligence platform designed to proactively identify and mitigate corporate revenue risks. Built for Microsoft Enterprise Agents Hackathons, it highlights deep integration with Microsoft 365 Copilot extensibility interfaces, utilizing first-class adapters for Microsoft Work IQ, Foundry IQ, and Graph abstractions.
 
+<video src="https://github.com/user-attachments/assets/xxxx-xxxx-xxxx" controls="controls" style="max-width: 100%;">
+</video>
+
 ---
 
 ## Core Business Problem
@@ -140,3 +143,34 @@ To register a brand-new tenant:
 2. **PostgreSQL on Azure**: Set up Azure Database for PostgreSQL (Flexible Server) and enable the `vector` extension.
 3. **Azure Container Apps**: Provision two Container Apps (backend, frontend) and configure env keys (`DATABASE_URL`, `SECRET_KEY`).
 4. **Redis cache**: Deploy Azure Cache for Redis and configure Celery.
+
+---
+
+## 💼 Hackathon Submission Details (Microsoft Agents League 2026)
+
+### Target Tracks
+- 💼 **Enterprise Agents Track (Primary)**
+- 💡 **Best Use of IQ Tools Track (Secondary)**
+
+### IQ Integration Map
+
+| Feature | IQ Layer | Role |
+|---|---|---|
+| Ticket clustering & risk evidence | **Foundry IQ** | Grounded retrieval from enterprise knowledge sources with source citations |
+| Communications feed & relationship routing | **Work IQ** | Memory from emails, meetings, Teams chats; infers decision authority |
+| Revenue projections & margin enforcement | **Fabric IQ** | Semantic reasoning over ARR, renewal cohorts, margin floors |
+| AI Explainability Panel | **Foundry IQ** | Citation chain showing which document triggered each risk flag |
+| Org Simulator contacts | **Work IQ** | Relationship graph from real communication patterns |
+| What-If Simulator constraints | **Fabric IQ** | Business logic (approval thresholds) from Fabric semantic model |
+
+### Agent Pipeline
+The 6-agent sequential orchestration pipeline has explicit dependency ordering: 
+```
+Contract Agent ➔ Payment Agent ➔ CS Agent (Foundry IQ) ➔ Revenue Risk Agent ➔ Recovery Agent ➔ Executive Briefing Agent (Work IQ)
+```
+
+### Safety Design
+- **SafetyGuard Gate**: All discount deployments > 20% require manual approval and are blocked with alert notifications.
+- **Sandboxed Simulator**: The What-If Simulator runs in a read-only sandboxed mode, never writing to the database until user explicitly signs off.
+- **Citation Provenance**: Every risk flag includes a Foundry IQ citation chain showing the source document name and excerpt.
+- **Safe Testing**: `dry_run: true` toggle parameter is available on all agent orchestration pipeline calls.

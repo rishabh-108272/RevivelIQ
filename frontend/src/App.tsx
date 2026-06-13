@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { Header } from './components/Header';
 import { Sidebar } from './components/Sidebar';
@@ -9,6 +9,8 @@ import { CampaignsPage } from './components/CampaignsPage';
 import { WarRoomPage } from './components/WarRoomPage';
 import { OrgSimulatorPage } from './components/OrgSimulatorPage';
 import { CopilotAgentPanel } from './components/CopilotAgentPanel';
+import { InteractiveTour } from './components/InteractiveTour';
+import { GuidedTour, reviveIQTourSteps } from './components/GuidedTour';
 import { Bot, Shield, KeyRound, Sparkles, RefreshCw } from 'lucide-react';
 
 const MainLayout: React.FC = () => {
@@ -19,6 +21,9 @@ const MainLayout: React.FC = () => {
   
   const [searchValue, setSearchValue] = useState('');
   const [isReseeding, setIsReseeding] = useState(false);
+  const [showGuidedTour, setShowGuidedTour] = useState(
+    () => !localStorage.getItem("reviveiq_tour_done")
+  );
 
   const handleReseed = async () => {
     if (!window.confirm("Wipe simulation environment? This resets the database and pre-calculates 100 new customer risk assessments.")) return;
@@ -52,7 +57,14 @@ const MainLayout: React.FC = () => {
     <div className="flex flex-col h-screen overflow-hidden bg-[#f3f2f1] dark:bg-[#11100f] text-microsoft-charcoal dark:text-zinc-200">
       
       {/* Header Banner */}
-      <Header onSearchChange={setSearchValue} searchValue={searchValue} />
+      <Header 
+        onSearchChange={setSearchValue} 
+        searchValue={searchValue} 
+        onStartTour={() => {
+          localStorage.removeItem("reviveiq_tour_done");
+          setShowGuidedTour(true);
+        }}
+      />
       
       {/* Content Frame */}
       <div className="flex flex-1 overflow-hidden">
@@ -104,6 +116,16 @@ const MainLayout: React.FC = () => {
           )}
         </main>
       </div>
+
+      {showGuidedTour && (
+        <GuidedTour
+          steps={reviveIQTourSteps}
+          onComplete={() => {
+            localStorage.setItem("reviveiq_tour_done", "true");
+            setShowGuidedTour(false);
+          }}
+        />
+      )}
 
       {/* Global Reseed Loader Overlay */}
       {isReseeding && (

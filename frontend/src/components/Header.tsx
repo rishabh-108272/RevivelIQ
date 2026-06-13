@@ -1,13 +1,14 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Sun, Moon, LogOut, Search, Settings, Shield } from 'lucide-react';
+import { Sun, Moon, LogOut, Search, Settings, Shield, HelpCircle } from 'lucide-react';
 
 interface HeaderProps {
   onSearchChange: (val: string) => void;
   searchValue: string;
+  onStartTour?: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ onSearchChange, searchValue }) => {
+export const Header: React.FC<HeaderProps> = ({ onSearchChange, searchValue, onStartTour }) => {
   const { user, logout } = useAuth();
   const [isDark, setIsDark] = React.useState(false);
 
@@ -59,6 +60,18 @@ export const Header: React.FC<HeaderProps> = ({ onSearchChange, searchValue }) =
 
       {/* Control Actions & User profile */}
       <div className="flex items-center space-x-4">
+        {/* Help / Tour Guide Button */}
+        {onStartTour && (
+          <button
+            onClick={onStartTour}
+            className="flex items-center space-x-1.5 px-3 py-1.5 rounded bg-microsoft-lightBlue hover:bg-microsoft-blue/20 dark:bg-microsoft-blue/15 dark:hover:bg-microsoft-blue/25 text-microsoft-blue dark:text-blue-400 text-xs font-bold transition-all cursor-pointer border border-microsoft-blue/10"
+            title="Launch Interactive Tour Guide"
+          >
+            <HelpCircle className="w-4 h-4" />
+            <span className="hidden sm:inline">Quick Tour</span>
+          </button>
+        )}
+
         {/* Light/Dark Toggle */}
         <button
           onClick={toggleDarkMode}
